@@ -29,6 +29,9 @@ program
   .option("--mobile", "Scaffold a React Native (Expo) mobile project")
   .option("--web", "Scaffold a Next.js web project")
   .option("--api", "Scaffold a Node.js API project")
+  .option("--ai", "Add AI-assisted design and progress tracking files")
+  .option("--git", "Initialize a Git repository and create initial commit")
+  .option("--monorepo", "Scaffold a Turborepo monorepo")
   .action(async (projectNameArg, options) => {
     console.log(DEVBLOCK_BANNER);
 
@@ -37,6 +40,7 @@ program
     if (options.mobile) projectType = "mobile";
     else if (options.web) projectType = "web";
     else if (options.api) projectType = "api";
+    else if (options.monorepo) projectType = "monorepo";
 
     // If no flag provided, prompt for type
     if (!projectType) {
@@ -48,6 +52,7 @@ program
           { title: "📱 Mobile  (React Native + Expo)", value: "mobile" },
           { title: "🌐 Web     (Next.js)", value: "web" },
           { title: "⚙️  API     (Node.js + Express)", value: "api" },
+          { title: "🏗️  Monorepo (Turborepo)", value: "monorepo" },
         ],
       });
       if (!typeResponse.type) process.exit(0);
@@ -88,14 +93,169 @@ program
     console.log();
 
     // Scaffold based on type
-    if (projectType === "mobile") {
-      await scaffoldMobile(projectName, targetDir);
-    } else if (projectType === "web") {
-      await scaffoldWeb(projectName, targetDir);
-    } else if (projectType === "api") {
-      await scaffoldApi(projectName, targetDir);
+    if (options.monorepo) {
+      await scaffoldMonorepo(projectName, targetDir);
+    } else {
+      if (projectType === "mobile") {
+        await scaffoldMobile(projectName, targetDir);
+      } else if (projectType === "web") {
+        await scaffoldWeb(projectName, targetDir);
+      } else if (projectType === "api") {
+        await scaffoldApi(projectName, targetDir);
+      }
     }
+
+    // AI Files
+    if (options.ai) {
+      await scaffoldAiFiles(projectName, targetDir);
+    }
+
+    // Brand Color Customization
+    await handleBrandColor(targetDir);
+
+    // Environment Variables
+    await handleEnvVars(targetDir);
+
+    // Git Initialization
+    if (options.git) {
+      await initializeGit(targetDir);
+    }
+
+    // Done — Final Next Steps
+    console.log(`
+${chalk.green("✔")} ${chalk.bold("Your DevBlock project is ready!")}
+${chalk.gray("Follow the next steps above to get started.")}
+`);
   });
+
+async function handleBrandColor(targetDir) {
+  const { color } = await prompts({
+    type: "text",
+    name: "color",
+    message: "Enter your primary brand color (Hex)?",
+    initial: "#2563eb",
+    validate: (val) =>
+      /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(val)
+        ? true
+        : "Please enter a valid Hex color code.",
+  });
+
+  if (color && color !== "#2563eb") {
+    const spinner = ora("Customizing brand colors...").start();
+    try {
+      await replacePlaceholders(targetDir, "#2563eb", color); // Replace default blue
+      spinner.succeed(`Brand color updated to ${chalk.hex(color)(color)}!`);
+    } catch {
+      spinner.fail("Failed to update brand color.");
+    }
+  }
+}
+
+async function handleEnvVars(targetDir) {
+  const envExamplePath = path.join(targetDir, ".env.example");
+  if (!fs.existsSync(envExamplePath)) return;
+
+  const { setupEnv } = await prompts({
+    type: "confirm",
+    name: "setupEnv",
+    message: "Would you like to set up your environment variables (.env) now?",
+    initial: true,
+  });
+
+  if (setupEnv) {
+    const content = await fs.readFile(envExamplePath, "utf8");
+    const lines = content.split("\n");
+    const envValues = {};
+
+    for (const line of lines) {
+      if (line.includes("=") && !line.startsWith("#")) {
+        const [key, defaultValue] = line.split("=");
+        const { value } = await prompts({
+          type: "text",
+          name: "value",
+          message: `Value for ${chalk.cyan(key)}?`,
+          initial: defaultValue || "",
+        });
+        envValues[key] = value || defaultValue || "";
+      }
+    }
+
+    const envContent = Object.entries(envValues)
+      .map(([k, v]) => `${k}=${v}`)
+      .join("\n");
+    await fs.writeFile(path.join(targetDir, ".env"), envContent);
+    console.log(`${chalk.green("✔")} .env file created!`);
+  }
+}
+
+async function initializeGit(targetDir) {
+  const spinner = ora("Initializing Git repository...").start();
+  try {
+    await execa("git", ["init"], { cwd: targetDir });
+    await execa("git", ["add", "."], { cwd: targetDir });
+    await execa(
+      "git",
+      ["commit", "-m", "feat: initial scaffold from devblock"],
+      {
+        cwd: targetDir,
+      },
+    );
+    spinner.succeed("Git repository initialized with initial commit!");
+  } catch (err) {
+    spinner.fail("Git initialization failed.");
+    console.error(chalk.red(err.message));
+  }
+}
+
+async function scaffoldMonorepo(projectName, targetDir) {
+  const spinner = ora(
+    `Scaffolding ${chalk.cyan(projectName)} monorepo (Turborepo)...`,
+  ).start();
+
+  try {
+    const templateDir = path.join(__dirname, "../templates/monorepo");
+    if (!fs.existsSync(templateDir)) {
+      // If template doesn't exist yet, we'll create it soon
+      throw new Error(`Monorepo template directory not found: ${templateDir}`);
+    }
+    await fs.copy(templateDir, targetDir, { overwrite: true });
+    await replacePlaceholders(targetDir, "{{PROJECT_NAME}}", projectName);
+    spinner.succeed(`Monorepo ${chalk.cyan(projectName)} created!`);
+  } catch (err) {
+    spinner.fail("Monorepo scaffold failed.");
+    console.error(chalk.red(err.message));
+    process.exit(1);
+  }
+
+  await installDependencies(targetDir);
+}
+
+async function scaffoldAiFiles(projectName, targetDir) {
+  const spinner = ora(
+    `Adding AI design and progress tracking files...`,
+  ).start();
+
+  try {
+    const aiTemplateDir = path.join(__dirname, "../templates/ai");
+    if (!fs.existsSync(aiTemplateDir)) {
+      throw new Error(`AI template directory not found: ${aiTemplateDir}`);
+    }
+
+    const aiTargetDir = path.join(targetDir, "ai");
+    await fs.ensureDir(aiTargetDir);
+
+    // Copy design.md and progress.md into the ai/ folder
+    await fs.copy(aiTemplateDir, aiTargetDir, { overwrite: true });
+
+    // Replace project name placeholder in the added files
+    await replacePlaceholders(aiTargetDir, "{{PROJECT_NAME}}", projectName);
+
+    spinner.succeed("AI files added to /ai successfully!");
+  } catch (err) {
+    spinner.fail("Failed to add AI files.");
+    console.error(chalk.red(err.message));
+  }
+}
 
 async function scaffoldMobile(projectName, targetDir) {
   const spinner = ora(

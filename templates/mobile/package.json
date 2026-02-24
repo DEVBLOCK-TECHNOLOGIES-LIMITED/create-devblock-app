@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "expo lint",
+    "prepare": "husky"
   },
   "dependencies": {
     "expo": "~54.0.33",
@@ -22,7 +24,9 @@
   "devDependencies": {
     "@types/react": "~19.1.0",
     "@types/react-native": "^0.73.0",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2"
   },
   "private": true
 }
