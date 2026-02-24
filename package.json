@@ -1,6 +1,6 @@
 {
   "name": "@devblocktechnologies/create-devblock-app",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Official DevBlock Technologies project scaffolding CLI",
   "main": "src/index.js",
   "bin": {

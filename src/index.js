@@ -24,7 +24,7 @@ ${chalk.gray("  CLI — Built with purpose. Delivered with precision.\n")}
 program
   .name("create-devblock-app")
   .description("Official DevBlock Technologies project scaffolding CLI")
-  .version("1.0.0")
+  .version("1.1.1")
   .argument("[project-name]", "Name of the project to create")
   .option("--mobile", "Scaffold a React Native (Expo) mobile project")
   .option("--web", "Scaffold a Next.js web project")
