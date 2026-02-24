@@ -4,21 +4,40 @@
 
 Spin up a high-performance, TypeScript-first ecosystem in seconds. This CLI provides standardized boilerplate for Web, Mobile, and API projects, mirroring the professional architecture used at DevBlock.
 
-## 🚀 Quick Start
+---
 
-Run the CLI without installation:
+## 💻 Installation
+
+You can run the CLI without local installation using `npx`:
 
 ```bash
 npx @devblocktechnologies/create-devblock-app [project-name]
 ```
 
-### Options
+Or install it globally to use it anywhere:
 
-| Flag       | Description                             |
-| :--------- | :-------------------------------------- |
-| `--mobile` | Scaffold an Expo (React Native) project |
-| `--web`    | Scaffold a Next.js (App Router) project |
-| `--api`    | Scaffold a modular Express server       |
+```bash
+npm install -g @devblocktechnologies/create-devblock-app
+create-devblock-app [project-name]
+```
+
+---
+
+## 🚀 Quick Start
+
+Launch the interactive prompt by running:
+
+```bash
+npx @devblocktechnologies/create-devblock-app
+```
+
+### Direct Scaffolding
+
+| Command                                                         | Description             |
+| :-------------------------------------------------------------- | :---------------------- |
+| `npx @devblocktechnologies/create-devblock-app my-app --mobile` | Create a Mobile project |
+| `npx @devblocktechnologies/create-devblock-app my-app --web`    | Create a Web project    |
+| `npx @devblocktechnologies/create-devblock-app my-app --api`    | Create an API project   |
 
 ---
 
@@ -26,45 +45,36 @@ npx @devblocktechnologies/create-devblock-app [project-name]
 
 ### 📱 Mobile (`--mobile`)
 
-A premium foundation for cross-platform apps.
+A premium foundation for cross-platform apps built with **React Native & Expo**.
 
-- **Core**: React Native & Expo (TypeScript)
-- **Styling**: NativeWind (Tailwind for Mobile)
-- **Navigation**: Expo Router (File-based routing)
-- **UI**: Lucide Icons & Reusable Boilerplate (Buttons, Cards)
-- **State**: Sample AuthContext included
+- **Stack**: TypeScript, NativeWind (Tailwind), Expo Router, Lucide Icons.
+- **Workflow**: `cd [project-name] && npx expo start`
 
 ### 🌐 Web (`--web`)
 
-A robust, SEO-optimized foundation for modern web apps.
+A robust foundation for modern web apps built with **Next.js**.
 
-- **Core**: Next.js 15+ App Router (TypeScript)
-- **Styling**: Tailwind CSS v4
-- **Animation**: Framer Motion
-- **UI**: Premium Layout system & Modular Components
-- **Icons**: Lucide React
+- **Stack**: TypeScript, Next.js 15+ App Router, Tailwind CSS v4, Framer Motion, Lucide React.
+- **Workflow**: `cd [project-name] && npm run dev`
 
 ### ⚙️ API (`--api`)
 
-A modular, scalable backend foundation.
+A modular, scalable backend foundation built with **Node.js & Express**.
 
-- **Core**: Node.js & Express (TypeScript)
-- **Validation**: Zod
-- **Security**: JWT Utilities, Helmet, & CORS
-- **Middleware**: Global Error Handling & Request Logging
-- **Structure**: Controller-Service-Route architecture
+- **Stack**: TypeScript, Express, Zod (Validation), JWT (Auth), Helmet & CORS (Security).
+- **Workflow**: `cd [project-name] && npm run dev`
 
 ---
 
 ## 📂 Standardized Structure
 
-All templates follow the **DevBlock Standard** directory tree:
+All templates follow the **DevBlock Standard** directory tree for consistency across projects:
 
 ```text
 src/
 ├── api/          # API clients or service integrations
 ├── components/   # Atomic & Modular UI components
-├── context/      # React Context state management
+├── context/      # React Context state management (Web/Mobile)
 ├── hooks/        # Custom reusable logic
 ├── routes/       # API route definitions (Back-end)
 ├── services/     # Business logic & Database interactions (Back-end)
@@ -74,12 +84,28 @@ src/
 
 ---
 
-## 🛠️ Performance & Best Practices
+## 🛠️ Development & Contributions
 
-- **TypeScript-First**: All templates are strictly typed for developer productivity.
-- **Modern Styling**: Tailwind-based workflow across both Web and Mobile.
-- **Modular Design**: Components and services are decoupled for easy testing and scaling.
-- **Ready to Ship**: Pre-configured with ESLint, linting, and basic security defaults.
+To work on this CLI locally:
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/devblocktechnologies/create-devblock-app.git
+   cd create-devblock-app
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Link for local testing**:
+   ```bash
+   npm link
+   ```
+   Now you can run `create-devblock-app` directly in any directory to test your changes.
 
 ---
 

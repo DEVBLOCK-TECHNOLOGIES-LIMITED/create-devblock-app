@@ -28,7 +28,7 @@ program
   .argument("[project-name]", "Name of the project to create")
   .option("--mobile", "Scaffold a React Native (Expo) mobile project")
   .option("--web", "Scaffold a Next.js web project")
-  .option("--api", "Scaffold a Node.js API project (coming soon)")
+  .option("--api", "Scaffold a Node.js API project")
   .action(async (projectNameArg, options) => {
     console.log(DEVBLOCK_BANNER);
 
