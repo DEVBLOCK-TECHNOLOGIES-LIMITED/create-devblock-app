@@ -1,0 +1,49 @@
+{
+  "name": "@devblocktechnologies/create-devblock-app",
+  "version": "1.0.0",
+  "description": "Official DevBlock Technologies project scaffolding CLI",
+  "main": "src/index.js",
+  "bin": {
+    "create-devblock-app": "src/index.js"
+  },
+  "files": [
+    "src",
+    "templates"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devblocktechnologies/create-devblock-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/devblocktechnologies/create-devblock-app/issues"
+  },
+  "homepage": "https://github.com/devblocktechnologies/create-devblock-app#readme",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^11.1.0",
+    "execa": "^8.0.1",
+    "fs-extra": "^11.2.0",
+    "ora": "^7.0.1",
+    "prompts": "^2.4.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "devblock",
+    "scaffold",
+    "expo",
+    "react-native",
+    "cli",
+    "starter"
+  ],
+  "author": "DevBlock Technologies <hello@devblock.io>",
+  "license": "MIT",
+  "type": "module"
+}
