@@ -1,6 +1,6 @@
 {
   "name": "@devblocktechnologies/create-devblock-app",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Official DevBlock Technologies project scaffolding CLI",
   "main": "src/index.js",
   "bin": {
@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devblocktechnologies/create-devblock-app.git"
+    "url": "git+https://github.com/DEVBLOCK-TECHNOLOGIES-LIMITED/create-devblock-app.git"
   },
   "bugs": {
-    "url": "https://github.com/devblocktechnologies/create-devblock-app/issues"
+    "url": "https://github.com/DEVBLOCK-TECHNOLOGIES-LIMITED/create-devblock-app/issues"
   },
-  "homepage": "https://github.com/devblocktechnologies/create-devblock-app#readme",
+  "homepage": "https://github.com/DEVBLOCK-TECHNOLOGIES-LIMITED/create-devblock-app#readme",
   "dependencies": {
     "chalk": "^5.3.0",
     "commander": "^11.1.0",

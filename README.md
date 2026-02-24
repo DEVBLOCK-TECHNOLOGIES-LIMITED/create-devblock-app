@@ -91,7 +91,7 @@ To work on this CLI locally:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/devblocktechnologies/create-devblock-app.git
+   git clone https://github.com/DEVBLOCK-TECHNOLOGIES-LIMITED/create-devblock-app.git
    cd create-devblock-app
    ```
 
